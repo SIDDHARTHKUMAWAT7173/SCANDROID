@@ -148,8 +148,8 @@ This enables executive-level security classification for decision-making.
 ### 1️⃣ Clone Repository
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/YOUR_REPO_NAME.git
-cd YOUR_REPO_NAME
+git clone https://github.com/SIDDHARTHKUMAWAT7173/SCANDROID.git
+cd SCANDROID
 ```
 
 ---

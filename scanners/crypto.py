@@ -19,11 +19,9 @@ class CryptoScanner:
     def scan(self):
         findings = []
 
-        # Iterate through all strings found in DEX
         for string_obj in self.analysis.get_strings():
             value = string_obj.get_value()
 
-            # Insecure TLS / Certificate validation detection
         for pattern in self.INSECURE_TLS_PATTERNS:
             if re.search(pattern, value, re.IGNORECASE):
                 findings.append({
@@ -37,7 +35,6 @@ class CryptoScanner:
                 break
 
 
-            # Weak hashing detection
             if re.search(r'MessageDigest\.getInstance\(["\']MD5["\']\)', value):
                 findings.append({
                     "type": "Weak Cryptography",
@@ -48,7 +45,6 @@ class CryptoScanner:
                     "remediation": "Use SHA-256 or a stronger hashing algorithm."
                 })
 
-            # Insecure random usage
             if re.search(r'new\s+Random\(\)', value):
                 findings.append({
                     "type": "Weak Random Generator",
@@ -70,7 +66,6 @@ class CryptoScanner:
                     "remediation": "Use SHA-256 or SHA-3 instead."
                 })
 
-            # Weak encryption mode
             if re.search(r'Cipher\.getInstance\(["\']AES/ECB', value):
                 findings.append({
                     "type": "Weak Encryption Mode",
@@ -81,11 +76,6 @@ class CryptoScanner:
                     "remediation": "Use AES with CBC or GCM mode."
                 })
 
-            # -----------------------------------------
-            # WebView Security Checks
-            # -----------------------------------------
-
-            # Dangerous JavaScript enabled
             if re.search(r'setJavaScriptEnabled\s*\(\s*true\s*\)', value):
                 findings.append({
                     "type": "WebView Misconfiguration",
@@ -96,7 +86,6 @@ class CryptoScanner:
                     "remediation": "Disable JavaScript unless strictly required."
                 })
 
-            # Allow file access
             if re.search(r'setAllowFileAccess\s*\(\s*true\s*\)', value):
                 findings.append({
                     "type": "WebView Misconfiguration",
@@ -107,7 +96,6 @@ class CryptoScanner:
                     "remediation": "Disable file access in WebView settings."
                 })
 
-            # JavaScript interface
             if re.search(r'addJavascriptInterface', value):
                 findings.append({
                     "type": "WebView Risk",
@@ -118,11 +106,6 @@ class CryptoScanner:
                     "remediation": "Avoid exposing sensitive methods via addJavascriptInterface."
                 })
 
-            # -----------------------------------------
-            # Network Security Configuration Checks
-            # -----------------------------------------
-
-            # networkSecurityConfig usage
             if re.search(r'networkSecurityConfig', value):
                 findings.append({
                     "type": "Network Security Configuration",
@@ -133,7 +116,6 @@ class CryptoScanner:
                     "remediation": "Ensure network security config enforces strong certificate validation."
                 })
 
-            # TrustManager implementation
             if re.search(r'TrustManager', value):
                 findings.append({
                     "type": "Insecure TrustManager",
@@ -144,7 +126,6 @@ class CryptoScanner:
                     "remediation": "Ensure TrustManager validates certificate chains properly."
                 })
 
-            # Certificate pinning bypass indicators
             if re.search(r'checkServerTrusted', value):
                 findings.append({
                     "type": "Certificate Validation Risk",
@@ -155,11 +136,6 @@ class CryptoScanner:
                     "remediation": "Implement strict certificate validation and certificate pinning."
                 })
 
-            # -----------------------------------------
-            # Root / Debug / Emulator Detection
-            # -----------------------------------------
-
-            # Root detection indicators
             if re.search(r'su\b', value) or re.search(r'Superuser', value):
                 findings.append({
                     "type": "Root Detection Logic",
@@ -170,7 +146,6 @@ class CryptoScanner:
                     "remediation": "Ensure root detection cannot be bypassed easily."
                 })
 
-            # Debug detection
             if re.search(r'isDebuggerConnected', value):
                 findings.append({
                     "type": "Anti-Debug Mechanism",
@@ -181,7 +156,6 @@ class CryptoScanner:
                     "remediation": "Ensure anti-debug logic is enforced in production builds."
                 })
 
-            # Emulator detection
             if re.search(r'generic_x86|goldfish|sdk_gphone', value):
                 findings.append({
                     "type": "Emulator Detection",
@@ -192,7 +166,6 @@ class CryptoScanner:
                     "remediation": "Combine multiple detection methods for stronger protection."
                 })
 
-            # Anti-tampering / signature check
             if re.search(r'getPackageInfo|signatures', value):
                 findings.append({
                     "type": "Signature Verification",

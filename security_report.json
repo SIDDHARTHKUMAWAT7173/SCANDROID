@@ -1,24 +1,24 @@
 {
-    "apk_name": "sieve.apk",
-    "scan_time": "2026-02-15 11:33:56",
+    "apk_name": "InsecureBankv2.apk",
+    "scan_time": "2026-02-15 19:05:54",
     "metadata": {
-        "package_name": "com.mwr.example.sieve",
+        "package_name": "com.android.insecurebankv2",
         "version_name": "1.0",
         "version_code": "1",
-        "min_sdk": "8",
-        "target_sdk": "17",
-        "sha256": "31878e33c526f9747c9b7ff38954bfcb2acc2a947ce7103589438e034637a6b7",
-        "risk_score": 19,
-        "risk_level": "Low",
-        "risk_percent": 19
+        "min_sdk": "15",
+        "target_sdk": "22",
+        "sha256": "b18af2a0e44d7634bbcdf93664d9c78a2695e050393fcfbb5e8b91f902d194a4",
+        "risk_score": 56,
+        "risk_level": "High",
+        "risk_percent": 56
     },
-    "total_issues": 4,
-    "risk_score": 19,
+    "total_issues": 14,
+    "risk_score": 56,
     "summary": {
         "Critical": 0,
-        "High": 1,
-        "Medium": 3,
-        "Low": 0
+        "High": 2,
+        "Medium": 10,
+        "Low": 2
     },
     "findings": [
         {
@@ -38,6 +38,62 @@
             "remediation": "Set android:allowBackup to false for sensitive applications."
         },
         {
+            "type": "Component Exposure",
+            "issue": "Exported activity detected: com.android.insecurebankv2.PostLogin",
+            "severity": "Medium",
+            "owasp": "M8 - Security Misconfiguration",
+            "description": "Exported components can be accessed by other applications.",
+            "remediation": "Restrict exported components or apply proper permissions."
+        },
+        {
+            "type": "Component Exposure",
+            "issue": "Exported activity detected: com.android.insecurebankv2.DoTransfer",
+            "severity": "Medium",
+            "owasp": "M8 - Security Misconfiguration",
+            "description": "Exported components can be accessed by other applications.",
+            "remediation": "Restrict exported components or apply proper permissions."
+        },
+        {
+            "type": "Component Exposure",
+            "issue": "Exported activity detected: com.android.insecurebankv2.ViewStatement",
+            "severity": "Medium",
+            "owasp": "M8 - Security Misconfiguration",
+            "description": "Exported components can be accessed by other applications.",
+            "remediation": "Restrict exported components or apply proper permissions."
+        },
+        {
+            "type": "Component Exposure",
+            "issue": "Exported activity detected: com.android.insecurebankv2.ChangePassword",
+            "severity": "Medium",
+            "owasp": "M8 - Security Misconfiguration",
+            "description": "Exported components can be accessed by other applications.",
+            "remediation": "Restrict exported components or apply proper permissions."
+        },
+        {
+            "type": "Component Exposure",
+            "issue": "Exported broadcast receiver detected without permission: com.android.insecurebankv2.MyBroadCastReceiver",
+            "severity": "Medium",
+            "owasp": "M8 - Security Misconfiguration",
+            "description": "Unprotected broadcast receivers can allow intent injection attacks.",
+            "remediation": "Set proper permissions or disable exported flag."
+        },
+        {
+            "type": "Component Exposure",
+            "issue": "Exported content provider detected without permission: com.android.insecurebankv2.TrackUserContentProvider",
+            "severity": "High",
+            "owasp": "M2 - Insecure Data Storage",
+            "description": "Unprotected content providers may expose sensitive application data.",
+            "remediation": "Protect content providers with permissions or disable exported."
+        },
+        {
+            "type": "Permission Risk",
+            "issue": "Sensitive permission requested: android.permission.WRITE_EXTERNAL_STORAGE",
+            "severity": "Medium",
+            "owasp": "M8 - Security Misconfiguration",
+            "description": "Write to external storage",
+            "remediation": "Ensure this permission is strictly required and justified."
+        },
+        {
             "type": "Permission Risk",
             "issue": "Sensitive permission requested: android.permission.READ_EXTERNAL_STORAGE",
             "severity": "Medium",
@@ -47,11 +103,35 @@
         },
         {
             "type": "Permission Risk",
-            "issue": "Sensitive permission requested: android.permission.WRITE_EXTERNAL_STORAGE",
+            "issue": "Sensitive permission requested: android.permission.SEND_SMS",
             "severity": "Medium",
             "owasp": "M8 - Security Misconfiguration",
-            "description": "Write to external storage",
+            "description": "Ability to send SMS messages",
             "remediation": "Ensure this permission is strictly required and justified."
+        },
+        {
+            "type": "Permission Risk",
+            "issue": "Sensitive permission requested: android.permission.READ_CONTACTS",
+            "severity": "Medium",
+            "owasp": "M8 - Security Misconfiguration",
+            "description": "Access to user's contacts",
+            "remediation": "Ensure this permission is strictly required and justified."
+        },
+        {
+            "type": "Information Disclosure",
+            "issue": "Email address found in application strings",
+            "severity": "Low",
+            "owasp": "M6 - Insufficient Privacy Controls",
+            "description": "Exposed email addresses may lead to information leakage.",
+            "remediation": "Avoid hardcoding sensitive contact details."
+        },
+        {
+            "type": "Information Disclosure",
+            "issue": "Email address found in application strings",
+            "severity": "Low",
+            "owasp": "M6 - Insufficient Privacy Controls",
+            "description": "Exposed email addresses may lead to information leakage.",
+            "remediation": "Avoid hardcoding sensitive contact details."
         }
     ]
 }

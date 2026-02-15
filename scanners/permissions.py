@@ -2,7 +2,6 @@ from utils.owasp import format_owasp
 
 class PermissionScanner:
 
-    # Some commonly abused or sensitive permissions
     DANGEROUS_PERMISSIONS = {
         "android.permission.READ_SMS": "Access to SMS messages",
         "android.permission.SEND_SMS": "Ability to send SMS messages",

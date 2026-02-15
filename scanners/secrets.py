@@ -20,7 +20,6 @@ class SecretScanner:
         for string_obj in self.analysis.get_strings():
             value = string_obj.get_value()
 
-            # AWS Keys
             if re.search(self.AWS_PATTERN, value):
                 findings.append({
                     "type": "Hardcoded Secret",
@@ -31,7 +30,6 @@ class SecretScanner:
                     "remediation": "Store secrets securely using Android Keystore or backend configuration."
                 })
 
-            # Generic API Keys
             if re.search(self.GENERIC_API_PATTERN, value):
                 findings.append({
                     "type": "Hardcoded Secret",
@@ -42,7 +40,6 @@ class SecretScanner:
                     "remediation": "Avoid embedding secrets directly in source code."
                 })
 
-            # Bearer tokens
             if re.search(self.BEARER_PATTERN, value):
                 findings.append({
                     "type": "Hardcoded Token",
@@ -53,7 +50,6 @@ class SecretScanner:
                     "remediation": "Use secure authentication flow and token management."
                 })
 
-            # Emails (informational but useful)
             if re.search(self.EMAIL_PATTERN, value):
                 findings.append({
                     "type": "Information Disclosure",
@@ -63,7 +59,7 @@ class SecretScanner:
                     "description": "Exposed email addresses may lead to information leakage.",
                     "remediation": "Avoid hardcoding sensitive contact details."
                 })
-            # Hardcoded credentials
+            
             if re.search(self.CREDENTIAL_PATTERN, value):
                 findings.append({
                     "type": "Hardcoded Credentials",

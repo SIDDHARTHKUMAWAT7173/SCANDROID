@@ -57,9 +57,7 @@ class APKAnalyzer:
         print("[*] Running secret detection...")
         findings.extend(SecretScanner(self.analysis).scan())
 
-        # -------------------------------
-        # Advanced Risk Scoring Engine
-        # -------------------------------
+
 
         severity_weights = {
             "Critical": 10,
@@ -74,7 +72,7 @@ class APKAnalyzer:
             severity = f.get("severity")
             risk_score += severity_weights.get(severity, 0)
 
-        # Risk level classification
+
         if risk_score >= 60:
             risk_level = "Critical"
         elif risk_score >= 40:

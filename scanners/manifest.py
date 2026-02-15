@@ -8,7 +8,6 @@ class ManifestScanner:
     def scan(self):
         findings = []
         manifest = self.apk.get_android_manifest_xml()
-        # Check if app is debuggable
         debuggable = self.apk.get_attribute_value("application", "debuggable")
         if debuggable == "true":
             findings.append({
@@ -20,7 +19,6 @@ class ManifestScanner:
                 "remediation": "Disable debuggable flag in production builds."
             })
 
-        # Check if backup is allowed
         allow_backup = self.apk.get_attribute_value("application", "allowBackup")
         if allow_backup == "true":
             findings.append({
@@ -32,7 +30,6 @@ class ManifestScanner:
                 "remediation": "Set android:allowBackup to false for sensitive applications."
             })
 
-        # Check for cleartext traffic
         cleartext = self.apk.get_attribute_value("application", "usesCleartextTraffic")
         if cleartext == "true":
             findings.append({
@@ -44,7 +41,6 @@ class ManifestScanner:
                 "remediation": "Enforce HTTPS and disable cleartext traffic."
             })
 
-        # Check exported activities without protection
         activities = self.apk.get_activities()
         for activity in activities:
             exported = self.apk.get_attribute_value("activity", "exported", name=activity)
@@ -69,10 +65,7 @@ class ManifestScanner:
                 "description": "Allowing cleartext traffic exposes network communication to interception.",
                 "remediation": "Disable cleartext traffic and enforce HTTPS connections."
             })    
-            
-        # -----------------------------------------
-        # Exported Services Check
-        # -----------------------------------------
+
         services = self.apk.get_services()
         for service in services:
             exported = self.apk.get_attribute_value("service", "exported", name=service)
@@ -89,9 +82,6 @@ class ManifestScanner:
                 })
 
 
-        # -----------------------------------------
-        # Exported Broadcast Receivers Check
-        # -----------------------------------------
         receivers = self.apk.get_receivers()
         for receiver in receivers:
             exported = self.apk.get_attribute_value("receiver", "exported", name=receiver)
@@ -108,9 +98,6 @@ class ManifestScanner:
                 })
 
 
-        # -----------------------------------------
-        # Exported Content Providers Check
-        # -----------------------------------------
         providers = self.apk.get_providers()
         for provider in providers:
             exported = self.apk.get_attribute_value("provider", "exported", name=provider)
